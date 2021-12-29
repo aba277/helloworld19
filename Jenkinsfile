@@ -4,7 +4,7 @@ pipeline {
     maven 'M2_HOME'
   }
   enviornment {
-    registry = "docker-hub
+    registry = "docker-hub"
     registryCredential = "dockerUserID"
   }
   stages {
