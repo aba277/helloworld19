@@ -1,29 +1,31 @@
 pipeline {
   agent any 
+  tools {
+    maven 'M2_HOME'
+  }
+  enviornment {
+    registry = "docker-hub
+    registryCredential = "dockerUserID"
+  }
   stages {
     stage('Build'){
       steps {
-        echo "build step"
-        sleep 10
+        sh 'mvn clean'
+        sh 'mvn install'
+        sh 'mvn package'
       }
     } 
   stage('test'){
     steps {
-        echo "build step"
-        sleep 10
+        sh 'mvn test'
       }
     } 
   stage('Deploy'){
     steps {
-        echo "build step"
-        sleep 10
+        script {
+        docker.build registry + ":BUILD_NUMBER"
+        }     
       }
-    } 
-  stage('Docker'){
-    steps {
-        echo "image step"
-        sleep 10
-      }
-    }    
+    }  
   }
 }
